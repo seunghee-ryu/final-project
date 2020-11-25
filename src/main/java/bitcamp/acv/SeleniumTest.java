@@ -12,15 +12,15 @@ public class SeleniumTest {
   public static void main(String... args) {
     WebDriver driver = null;
     // 카운트 무시하세요 ㅠㅠ.
-    int t_cnt = 0;
+    //    int t_cnt = 0;
     //    int cnt = 0;
     try {
       // drvier 설정 - 크롬드라이버 위치 => 본인걸로 바꾸셔야 합니다.
-      System.setProperty("webdriver.chrome.driver", "/Users/rsh/Downloads/chromedriver");
+      System.setProperty("webdriver.chrome.driver", "/Users/heejin/Downloads/chromedriver");
       // Chrome 드라이버 인스턴스 설정
       driver = new ChromeDriver();
       // URL로 접속
-      driver.get("https://movie.naver.com/movie/bi/mi/photoView.nhn?code=195659");
+      driver.get("https://movie.naver.com/movie/bi/mi/photoView.nhn?code=136900");
       // 대기 설정(정보를 가져오기 전에 로딩이 완료 안되는 경우가 있음)
       driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
 
@@ -28,12 +28,11 @@ public class SeleniumTest {
       WebElement t_element = driver.findElement(By.id("photo_area"));
 
       // 스틸컷의 숫자를 가져오는 코드 입니다. 무시하세요
-      String str = t_element.findElement(By.cssSelector("#photoTypeGroup li[imagetype=\'STILLCUT\']")).findElement(By.tagName("em")).getText();
-      t_cnt = Integer.parseInt(str);
-      int nb = (t_cnt / 8) + 1;
+      //      String str = t_element.findElement(By.cssSelector("#photoTypeGroup li[imagetype=\'STILLCUT\']")).findElement(By.tagName("em")).getText();
+      //      t_cnt = Integer.parseInt(str);
 
-      // 다음 버튼을 nb번 누르게 했습니다.
-      for (int i = 0 ; i < nb; i++) {
+      // 다음 버튼을 2번 누르게 했습니다.
+      for (int i = 0 ; i < 2; i++) {
         WebElement element = crawl(t_element);
         element.findElement(By.className("btn_next")).click();
       }
@@ -100,5 +99,4 @@ public class SeleniumTest {
     }
     return element;
   }
-
 }

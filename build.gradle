@@ -7,14 +7,14 @@
  */
 
 plugins {
-
-    id 'eclipse'
     
     // Apply the java plugin to add support for Java
     id 'java'
 
-    // Apply the application plugin to add support for building a CLI application.
-    id 'application'
+    id 'eclipse-wtp'
+
+    id 'war'
+
 }
 
 repositories {
@@ -25,26 +25,32 @@ repositories {
 
 dependencies {
 
+    // 서블릿api library
+    compile 'javax.servlet:javax.servlet-api:4.0.1'
+
     // 셀레니움
     // https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java
     compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
 
+    // 구글코드
     implementation 'com.googlecode.json-simple:json-simple:1.1.1'
+    
     // This dependency is used by the application.
     implementation 'com.google.guava:guava:29.0-jre'
 
     // Use JUnit test framework
     testImplementation 'junit:junit:4.13'
 
+    // jsoup
     implementation 'org.jsoup:jsoup:1.13.1'
     
+    // Mybatis 퍼시스턴스 프레임워크
     implementation 'org.mybatis:mybatis:3.5.6'
 
     // MariaDB JDBC 드라이버
     implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.0'
+
+    // JSON 라이브러리
+    implementation 'com.google.code.gson:gson:2.8.6'
 }
 
-application {
-    // Define the main class for the application.
-    mainClassName = 'com.acv.App'
-}

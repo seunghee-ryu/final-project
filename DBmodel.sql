@@ -63,20 +63,20 @@ DROP TABLE IF EXISTS acv_lgn_type RESTRICT;
 
 -- 회원
 CREATE TABLE acv_mbr (
-  mno       INTEGER     NOT NULL COMMENT '회원번호', -- 회원번호
-  auth      INTEGER     NOT NULL COMMENT '권한', -- 권한
-  name      VARCHAR(50) NOT NULL COMMENT '이름', -- 이름
-  ltno      INTEGER     NOT NULL COMMENT '로그인유형번호', -- 로그인유형번호
-  email     VARCHAR(40) NOT NULL COMMENT '이메일', -- 이메일
-  pw        VARCHAR(30) NOT NULL COMMENT '비밀번호', -- 비밀번호
-  nick      VARCHAR(50) NULL     COMMENT '별명', -- 별명
-  photo     MEDIUMTEXT  NULL     COMMENT '사진', -- 사진
-  intro     MEDIUMTEXT  NULL     COMMENT '소개글', -- 소개글
-  qno       INTEGER     NULL     COMMENT '비밀번호 힌트 질문 번호', -- 비밀번호 힌트 질문 번호
-  pw_hint_a VARCHAR(50) NULL     COMMENT '비밀번호 힌트 정답', -- 비밀번호 힌트 정답
-  rdt       DATETIME    NOT NULL DEFAULT now() COMMENT '회원 가입일', -- 회원 가입일
-  stno      INTEGER     NULL     COMMENT '회원 상태 번호', -- 회원 상태 번호
-  stat_mdt  DATETIME    NULL DEFAULT now() COMMENT '상태 변경일' -- 상태 변경일
+  mno       INTEGER      NOT NULL COMMENT '회원번호', -- 회원번호
+  auth      INTEGER      NOT NULL COMMENT '권한', -- 권한
+  name      VARCHAR(50)  NOT NULL COMMENT '이름', -- 이름
+  ltno      INTEGER      NOT NULL COMMENT '로그인유형번호', -- 로그인유형번호
+  email     VARCHAR(40)  NOT NULL COMMENT '이메일', -- 이메일
+  pw        VARCHAR(255) NOT NULL COMMENT '비밀번호', -- 비밀번호
+  nick      VARCHAR(50)  NULL     COMMENT '별명', -- 별명
+  photo     MEDIUMTEXT   NULL     COMMENT '사진', -- 사진
+  intro     MEDIUMTEXT   NULL     COMMENT '소개글', -- 소개글
+  qno       INTEGER      NULL     COMMENT '비밀번호 힌트 질문 번호', -- 비밀번호 힌트 질문 번호
+  pw_hint_a VARCHAR(50)  NULL     COMMENT '비밀번호 힌트 정답', -- 비밀번호 힌트 정답
+  rdt       DATETIME     NOT NULL DEFAULT now() COMMENT '회원 가입일', -- 회원 가입일
+  stno      INTEGER      NULL     COMMENT '회원 상태 번호', -- 회원 상태 번호
+  stat_mdt  DATETIME     NULL     DEFAULT now() COMMENT '상태 변경일' -- 상태 변경일
 )
 COMMENT '회원';
 
@@ -106,15 +106,16 @@ ALTER TABLE acv_mbr
 CREATE TABLE acv_mov (
   mvno      INTEGER     NOT NULL COMMENT '영화 번호', -- 영화 번호
   title     VARCHAR(50) NOT NULL COMMENT '영화 제목', -- 영화 제목
-  dir       VARCHAR(50) NULL     COMMENT '영화 감독', -- 영화 감독
-  eng_title VARCHAR(50) NULL     COMMENT '영화 영문명', -- 영화 영문명
-  runtime   INTEGER     NULL     COMMENT '상영시간', -- 상영시간
-  odt       DATE        NULL     COMMENT '개봉일', -- 개봉일
-  actors    MEDIUMTEXT  NULL     COMMENT '출연', -- 출연
-  syn       MEDIUMTEXT  NULL     COMMENT '시놉시스', -- 시놉시스
-  nation    VARCHAR(50) NULL     COMMENT '국가명', -- 국가명
+  dir       VARCHAR(50) NOT NULL COMMENT '영화 감독', -- 영화 감독
+  eng_title VARCHAR(50) NOT NULL COMMENT '영화 영문명', -- 영화 영문명
+  runtime   INTEGER     NOT NULL COMMENT '상영시간', -- 상영시간
+  odt       DATE        NOT NULL COMMENT '개봉일', -- 개봉일
+  syn       MEDIUMTEXT  NOT NULL COMMENT '시놉시스', -- 시놉시스
+  actors    MEDIUMTEXT  NOT NULL COMMENT '출연', -- 출연
+  nation    VARCHAR(50) NOT NULL COMMENT '국가명', -- 국가명
   stat      INTEGER     NOT NULL COMMENT '상태', -- 상태
-  rdt       DATETIME    NOT NULL DEFAULT now() COMMENT '등록일' -- 등록일
+  rdt       DATETIME    NOT NULL DEFAULT now() COMMENT '등록일', -- 등록일
+  nav_cd    INTEGER     NOT NULL COMMENT '네이버영화코드' -- 네이버영화코드
 )
 COMMENT '영화';
 
@@ -129,6 +130,12 @@ ALTER TABLE acv_mov
 CREATE UNIQUE INDEX UIX_acv_mov
   ON acv_mov ( -- 영화
     title ASC -- 영화 제목
+  );
+
+-- 네이버영화코드 유니크
+CREATE UNIQUE INDEX UIX_acv_mov2
+  ON acv_mov ( -- 영화
+    nav_cd ASC -- 네이버영화코드
   );
 
 -- 영화 인덱스
@@ -174,7 +181,7 @@ ALTER TABLE acv_tag
 -- 영화 후기
 CREATE TABLE acv_rv (
   rvno     INTEGER    NOT NULL COMMENT '영화 후기 번호', -- 영화 후기 번호
-  stcno    INTEGER    NULL     COMMENT '스틸컷 번호', -- 스틸컷 번호
+  stcno    INTEGER    NOT NULL COMMENT '스틸컷 번호', -- 스틸컷 번호
   mno      INTEGER    NOT NULL COMMENT '작성자 번호', -- 작성자 번호
   txt      MEDIUMTEXT NOT NULL COMMENT '후기내용', -- 후기내용
   txt_x    INTEGER    NOT NULL COMMENT '출력X좌표', -- 출력X좌표
@@ -346,7 +353,7 @@ ALTER TABLE acv_gnr
 CREATE TABLE acv_stc (
   stcno   INTEGER    NOT NULL COMMENT '스틸컷 번호', -- 스틸컷 번호
   mvno    INTEGER    NOT NULL COMMENT '영화 번호', -- 영화 번호
-  stc_url MEDIUMTEXT NOT NULL COMMENT '이미지 주소' -- 이미지 주소
+  stc_url MEDIUMTEXT NULL     COMMENT '이미지 주소' -- 이미지 주소
 )
 COMMENT '영화 스틸컷';
 
@@ -387,6 +394,9 @@ CREATE UNIQUE INDEX UIX_acv_gnr_mov
     gno ASC,  -- 장르 번호
     mvno ASC  -- 영화 번호
   );
+
+ALTER TABLE acv_gnr_mov
+  MODIFY COLUMN gmno INTEGER NOT NULL AUTO_INCREMENT COMMENT '영화_장르 번호';
 
 -- 좋아요 이력
 CREATE TABLE acv_like (

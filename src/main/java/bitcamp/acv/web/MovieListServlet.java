@@ -90,8 +90,8 @@ public class MovieListServlet extends HttpServlet {
             + "<td>%s</td>"
             + "<td>%d</td>"
             + "<td>%s</td>"
-            + "<td><img src=\"%s\" alt=\"사진추가\" width=\"120\" /></td>"
-            + "<td><img src=\"%s\" alt=\"사진추가\" width=\"120\" /></td>"
+            + "<td>%s</td>"
+            + "<td>%s</td>"
             + "<td>%s</td>",
             movie.getNo(),
             movie.getNaverCd(),

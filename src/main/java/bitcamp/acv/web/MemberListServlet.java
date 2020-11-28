@@ -27,7 +27,7 @@ public class MemberListServlet extends HttpServlet {
     response.setContentType("text/html;charset=UTF-8");
 
     PrintWriter out = response.getWriter();
-
+ 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head><title>멤버 목록</title></head>");
@@ -55,25 +55,6 @@ public class MemberListServlet extends HttpServlet {
       out.println("<th>회원 상태 번호</th>");
       out.println("<th>회원 상태 변경일</th>");
       out.println("</tr>");
-
-      //      for (Member member : list ) {
-      //        StringBuilder stillCuts = new StringBuilder();
-      //        for (String stillCut : member.getStillCuts()) {
-      //          stillCuts.append(stillCut);
-      //          stillCuts.append("\n");
-      //        }
-      //
-      //        StringBuilder posters = new StringBuilder();
-      //        for (String poster : movie.getPosters()) {
-      //          posters.append(poster);
-      //          posters.append("\n");
-      //        }
-      //
-      //        StringBuilder genres = new StringBuilder();
-      //        for (String genre : movie.getGenres()) {
-      //          genres.append(genre);
-      //          genres.append("\n");
-      //        }
 
       for (Member member : list ) {
 

@@ -25,19 +25,22 @@ public class MemberDeleteServlet extends HttpServlet {
     MemberService boardService =
         (MemberService) ctx.getAttribute("memberService");
 
+    // 웹주소에 동봉된 데이터(Query String: qs)를 읽는다.
+    int no = Integer.parseInt(request.getParameter("no"));
+
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
+    // 일단 리스트로 돌아가도록 해놨습니다.
     out.println("<meta http-equiv='Refresh' content='1;list'>");
     out.println("<title>회원삭제</title></head>");
     out.println("<body>");
     try {
       out.println("<h1>회원 삭제</h1>");
 
-      int no = Integer.parseInt(request.getParameter("no"));
 
       int count = boardService.delete(no);
       try {

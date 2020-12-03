@@ -31,6 +31,8 @@ public class LoginUserServlet extends HttpServlet {
     out.println("<head><title>로그인사용자</title></head>");
     out.println("<body>");
 
+    request.getRequestDispatcher("/topbar").include(request, response);
+
     out.println("<h1>로그인 사용자</h1>");
 
     Member member = (Member) session.getAttribute("loginUser");
@@ -43,6 +45,8 @@ public class LoginUserServlet extends HttpServlet {
       out.printf("이메일: %s<br>\n", member.getEmail());
       out.printf("사진: %s<br>\n", member.getPhoto());
       out.printf("소개: %s<br>\n", member.getIntro());
+
+      out.printf("<a href='delete?no=%d'>탈퇴</a>\n", member.getNo());
     }
   }
 }

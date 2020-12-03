@@ -1,4 +1,4 @@
-package bitcamp.acv.web;
+package bitcamp.acv.web.tag;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -9,11 +9,11 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import bitcamp.acv.service.MemberService;
+import bitcamp.acv.service.TagService;
 
 
-@WebServlet("/member/delete")
-public class MemberDeleteServlet extends HttpServlet {
+@WebServlet("/tag/delete")
+public class TagDeleteServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
 
@@ -22,35 +22,33 @@ public class MemberDeleteServlet extends HttpServlet {
       throws ServletException, IOException {
 
     ServletContext ctx = request.getServletContext();
-    MemberService boardService =
-        (MemberService) ctx.getAttribute("memberService");
+    TagService tagService =
+        (TagService) ctx.getAttribute("tagService");
 
     // 웹주소에 동봉된 데이터(Query String: qs)를 읽는다.
     int no = Integer.parseInt(request.getParameter("no"));
 
-    response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();
 
     out.println("<!DOCTYPE html>");
     out.println("<html>");
     out.println("<head>");
-    // 일단 리스트로 돌아가도록 해놨습니다.
     out.println("<meta http-equiv='Refresh' content='1;list'>");
-    out.println("<title>회원삭제</title></head>");
+    out.println("<title>태그삭제</title></head>");
     out.println("<body>");
     try {
-      out.println("<h1>회원 삭제</h1>");
+      out.println("<h1>태그 삭제</h1>");
 
 
-      int count = boardService.delete(no);
+      int count = tagService.delete(no);
       try {
         if (count == 0) {
-          out.printf("<p>해당 번호의 게시물이 존재하지 않습니다.</p>\n");
+          out.printf("<p>해당 번호의 태그가 존재하지 않습니다.</p>\n");
         } else {
-          out.printf("<p>게시글을 삭제하였습니다.</p>\n");
+          out.printf("<p>태그를 삭제하였습니다.</p>\n");
         }
       } catch (Exception e) {
-        out.println("게시글 삭제 중 오류 발생!");
+        out.println("태그 삭제 중 오류 발생!");
         e.printStackTrace();
       }
 

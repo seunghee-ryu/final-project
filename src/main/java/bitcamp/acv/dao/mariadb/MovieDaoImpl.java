@@ -95,5 +95,39 @@ public class MovieDaoImpl implements MovieDao {
       return sqlSession.selectList("MovieDao.findAll");
     }
   }
+
+  @Override
+  public int insert(Movie movie) throws Exception {
+    // TODO Auto-generated method stub
+    return 0;
+  }
+
+  @Override
+  public List<Movie> findAll(String keyword) {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectList("MovieDao.findAll", keyword);
+    }
+  }
+
+  @Override
+  public Movie findByNo(int no) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectOne("MovieDao.findByNo", no);
+    }
+  }
+
+  //  @Override
+  //  public int getStillCutNo(String stillcut) throws Exception {
+  //    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+  //      return sqlSession.selectOne("MovieDao.getStillCutNo", stillcut);
+  //    }
+  //  }
+
+  @Override
+  public String getStcUrl(int stcNo) throws Exception {
+    try (SqlSession sqlSession = sqlSessionFactory.openSession()) {
+      return sqlSession.selectOne("MovieDao.getStcUrl", stcNo);
+    }
+  }
 }
 

@@ -1,4 +1,4 @@
-package bitcamp.acv.web;
+package bitcamp.acv.web.member;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,12 +14,22 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.Part;
 import bitcamp.acv.domain.Member;
 import bitcamp.acv.service.MemberService;
+import net.coobird.thumbnailator.ThumbnailParameter;
+import net.coobird.thumbnailator.Thumbnails;
+import net.coobird.thumbnailator.geometry.Positions;
+import net.coobird.thumbnailator.name.Rename;
 
 @MultipartConfig(maxFileSize = 1024 * 1024 * 10)
 @WebServlet("/member/add")
 public class MemberAddServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
+  private String uploadDir;
+
+  @Override
+  public void init() throws ServletException {
+    this.uploadDir = this.getServletContext().getRealPath("/upload");
+  }
 
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -27,10 +37,7 @@ public class MemberAddServlet extends HttpServlet {
 
     ServletContext ctx = request.getServletContext();
     MemberService memberService =  (MemberService) ctx.getAttribute("memberService");
-    //    response.setContentType("text/html;charset=UTF-8");
-
-    // 클라이언트가 post 요청할 때 보낸 데이터를 읽는다.
-    request.setCharacterEncoding("UTF-8");
+    response.setContentType("text/html;charset=UTF-8");
 
     Member member = new Member();
     member.setAuthority(1);
@@ -40,25 +47,30 @@ public class MemberAddServlet extends HttpServlet {
     member.setEmail(request.getParameter("email"));
     member.setPassword(request.getParameter("password"));
     member.setNickName(request.getParameter("nickName"));
-    //    member.setPhoto(request.getParameter("photo"));
+    member.setPhoto(request.getParameter("photo"));
     member.setIntro(request.getParameter("intro"));
     member.setQuestionsNo(Integer.parseInt(request.getParameter("questionsNo")));
     member.setQuestionsAnswer(request.getParameter("questionsAnswer"));
 
-    // 입력값 꺼내기
     Part photoPart = request.getPart("photo");
 
-    // 회원 사진을 저장할 위치
-    // ->컨텍스트루트/upload/파일
-    // 파일을 저장할 대 사용할 파일명을 준비한다.
     String filename = UUID.randomUUID().toString();
     String saveFilePath = ctx.getRealPath("/upload/" + filename);
-
-    // 해당 위치에 업로드 된 사진 파일을 저장한다.
     photoPart.write(saveFilePath);
 
-    // db에 사진 파일 이름을 저장하기 위해 객체에 보관한다.
     member.setPhoto(filename);
+
+
+    Thumbnails.of(this.uploadDir + "/" + filename)//
+    .size(150, 150)//
+    .outputFormat("jpg")//
+    .crop(Positions.CENTER)
+    .toFiles(new Rename() {
+      @Override
+      public String apply(String name, ThumbnailParameter param) {
+        return name + "_150x150";
+      }
+    });
 
     response.setContentType("text/html;charset=UTF-8");
     PrintWriter out = response.getWriter();

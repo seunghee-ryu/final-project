@@ -17,4 +17,23 @@ public class DefaultMovieService implements MovieService {
     return movieDao.findAll();
   }
 
+  @Override
+  public List<Movie> list(String keyword) throws Exception {
+    return movieDao.findAll(keyword);
+  }
+
+  @Override
+  public Movie findByNo(int no) throws Exception {
+    return movieDao.findByNo(no);
+  }
+
+  @Override
+  public int getStillCutNo(String stillcut) throws Exception {
+    return movieDao.getStillCutNo(stillcut);
+  }
+
+  @Override
+  public String getStcUrl(int stcNo) throws Exception {
+    return movieDao.getStcUrl(stcNo);
+  }
 }

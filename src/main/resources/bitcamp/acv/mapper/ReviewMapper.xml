@@ -1,3 +1,4 @@
+<!-- 
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -26,11 +27,14 @@
       <id column="tno"          property="no"/>
       <result column="title"    property="title"/>
     </collection>
-    
   </resultMap>
   
-  <!-- 여러 SQL 문에서 중복되는 코드가 있다면, 
-       다음과 같이 별도로 분리한다. -->
+  <resultMap type="font" id="FontMap">
+    <id column="tfno" property="no"/>
+    <result column="name" property="name"/>
+  </resultMap>
+  여러 SQL 문에서 중복되는 코드가 있다면, 
+       다음과 같이 별도로 분리한다.
   <sql id="sql1">
     select 
     rv.rvno,
@@ -46,23 +50,29 @@
     rv.stat
     from 
       acv_rv rv
-      
-<!--       inner join acv_mbr m on rv.mno=m.no
-      inner join acv -->
   </sql>
+       
        
   <select id="findAll" resultMap="ReviewMap" parameterType="string">
     <include refid="sql1"/>
     order by rv.rvno desc
   </select>
   
-<!--     <insert id="insert" parameterType="member">
-    insert into acv_mbr(auth,name,ltno,email,pw,nick,photo,intro,qno,pw_hint_a,stno,stat_mdt)
-    values(#{authority},#{name},#{loginNo},#{email},password(#{password}),#{nickName},#{photo},#{intro}
-    ,#{questionsNo},#{questionsAnswer},#{status},#{statusModifiedDate})
-  </insert> -->
-
+  <select id="findFonts" resultMap="FontMap">
+    select
+      tfno,
+      name
+    from 
+      acv_txt_font
+  </select>
+  
+  <insert id="insert" parameterType="review">
+    insert into acv_rv(stcno, mno, txt, txt_x, txt_y, tfno, txt_size, rdt, mdt, stat)
+    values(#{})
+    
+  </insert>
 </mapper>
+        -->
 
 
 

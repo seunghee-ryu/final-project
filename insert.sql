@@ -1,8 +1,3 @@
-insert into acv_mov(title, dir, eng_title, runtime, odt, actors, syn, nation, stat, nav_cd) values('ㄱ', 'ㄱ', 'ㄱ', 12, '2020-2-2', 'ㅁ', 'ㅁ', 'ㅁ', 1, 3);
-insert into acv_pstr(mvno, ps_url, main_ps) values(1, 'a', 1);
-insert into acv_stc(mvno, stc_url) values(1, 'b');
-insert into acv_gnr_mov(gmno, gno, mvno) values(1, 1, 1);
-
 /* 장르 샘플 */
 insert into acv_gnr(gno, title) values(1, '드라마');
 insert into acv_gnr(gno, title) values(2, '판타지');
@@ -133,7 +128,7 @@ values(1, '무현, 두 도시 이야기', '전인환', 'Moo-hyun, Tale of Two Ci
 
 /*스틸컷 샘플*/
 insert into acv_stc(stcno, mvno)
-values(1, 1)
+values(1, 1);
 
 insert into acv_stc(stcno, mvno, stc_url)
 values(2, 1, 'https://movie-phinf.pstatic.net/20170816_237/15028507560937wWpL_JPEG/movie_image.jpg?type=m427_320_2');

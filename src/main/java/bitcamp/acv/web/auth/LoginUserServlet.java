@@ -46,7 +46,9 @@ public class LoginUserServlet extends HttpServlet {
       out.printf("사진: %s<br>\n", member.getPhoto());
       out.printf("소개: %s<br>\n", member.getIntro());
 
-      out.printf("<a href='delete?no=%d'>탈퇴</a>\n", member.getNo());
+      if (member.getStatus() == 1 || member.getStatus() == 2) {
+        out.printf("<a href='../member/delete?no=%d'>탈퇴</a>\n", member.getNo());
+      }
     }
   }
 }

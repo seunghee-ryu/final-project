@@ -28,12 +28,17 @@ public class DefaultMovieService implements MovieService {
   }
 
   @Override
-  public int getStillCutNo(String stillcut) throws Exception {
-    return movieDao.getStillCutNo(stillcut);
+  public int getStcNo(String stillcut) throws Exception {
+    return movieDao.getStcNo(stillcut);
   }
 
   @Override
   public String getStcUrl(int stcNo) throws Exception {
     return movieDao.getStcUrl(stcNo);
+  }
+
+  @Override
+  public int update(Movie movie) throws Exception {
+    return movieDao.update(movie);
   }
 }

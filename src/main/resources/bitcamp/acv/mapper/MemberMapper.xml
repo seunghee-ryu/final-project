@@ -114,22 +114,25 @@
   <update id="active" parameterType="int">
     update acv_mbr
     set
-    stno = 1
+    stno = 1,
+    stat_mdt = now()
     where mno=#{no}
   </update>
   
   <update id="inactive" parameterType="int">
     update acv_mbr
     set
-    stno = 2
+    stno = 2,
+    stat_mdt = now()
     where mno=#{no}
   </update>
   
-  <delete id="delete" parameterType="int">
+  <update id="delete" parameterType="int">
     update acv_mbr
     set
-    stno = 3
+    stno = 3,
+    stat_mdt = now()
     where mno=#{no}
-  </delete>
+  </update>
   
 </mapper>

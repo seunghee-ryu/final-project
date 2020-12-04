@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import bitcamp.acv.service.MemberService;
 
 
-@WebServlet("/member/delete")
+@WebServlet("/member/inactive")
 public class MemberInactiveServlet extends HttpServlet {
 
   private static final long serialVersionUID = 1L;
